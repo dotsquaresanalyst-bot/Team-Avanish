@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="en-GB" data-theme="light">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Online Booking System – Concept Mockup</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#f3f6f8;--surface:#fff;--ink:#12263a;--muted:#5b6b7a;--line:#e0e7ec;--teal:#0b7d70;--on-teal:#fff;--teal-soft:#dff4f0;--amber:#a86300;--amber-soft:#fdf0d5;--violet:#5b4bd6;--violet-soft:#e9e6fc;--rose:#b83250;--hero:#e4f1f1;--sh:0 1px 2px rgba(18,38,58,.06),0 12px 32px -12px rgba(18,38,58,.18);
+box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px);color-scheme:light}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+*,*::before,*::after{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.55 "Plus Jakarta Sans",system-ui,sans-serif;-webkit-font-smoothing:antialiased}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);background:var(--surface);z-index:30}
+button,input,select,textarea{font:inherit;color:inherit}
+:focus-visible{outline:2px solid var(--teal);outline-offset:2px}
+.top{position:sticky;top:env(safe-area-inset-top,0px);z-index:20;background:var(--surface);border-bottom:1px solid var(--line)}
+.top .in{max-width:1180px;margin:auto;padding:12px 24px;display:flex;align-items:center;gap:20px;flex-wrap:wrap}
+.brand{display:flex;align-items:center;gap:10px;font-weight:700;font-size:17px;margin-right:auto}
+.logo{width:32px;height:32px;border-radius:10px;background:var(--teal);display:grid;place-items:center;color:var(--on-teal)}
+.tabs{display:flex;gap:4px;background:var(--bg);padding:4px;border-radius:12px}
+.tabs button{border:0;background:none;padding:8px 16px;border-radius:9px;font-weight:600;color:var(--muted);cursor:pointer}
+.tabs button[aria-selected="true"]{background:var(--surface);color:var(--ink);box-shadow:0 1px 3px rgba(18,38,58,.15)}
+.tag{font-size:12px;font-weight:600;color:var(--violet);background:var(--violet-soft);padding:4px 10px;border-radius:99px}
+main{max-width:1180px;margin:auto;padding:32px 24px 56px}
+[hidden]{display:none!important}
+.hero{display:grid;grid-template-columns:1fr 1.05fr;gap:48px;align-items:start;background:var(--hero);border-radius:28px;padding:48px}
+.hero h1{font:400 clamp(40px,5.5vw,64px)/1.02 "Instrument Serif",Georgia,serif;margin:0 0 16px;letter-spacing:-.01em}
+.hero p.lead{font-size:17px;color:var(--muted);max-width:44ch;margin:0 0 28px}
+.perks{list-style:none;padding:0;margin:0;display:grid;gap:14px}
+.perks li{display:flex;gap:12px;align-items:flex-start}
+.perks i{flex:none;width:36px;height:36px;border-radius:11px;background:var(--surface);display:grid;place-items:center;color:var(--teal);font-style:normal;box-shadow:var(--sh)}
+.perks b{display:block;font-size:15px}.perks span{color:var(--muted);font-size:14px}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:22px;box-shadow:var(--sh)}
+.widget{padding:24px}
+.seg{display:grid;grid-template-columns:1fr 1fr;background:var(--bg);border-radius:12px;padding:4px;margin-bottom:20px}
+.seg button{border:0;background:none;padding:10px;border-radius:9px;font-weight:600;color:var(--muted);cursor:pointer}
+.seg button[aria-pressed="true"]{background:var(--surface);color:var(--ink);box-shadow:0 1px 3px rgba(18,38,58,.15)}
+.steps{display:flex;gap:6px;margin-bottom:22px}
+.steps div{flex:1;font-size:12px;font-weight:600;color:var(--muted)}
+.steps div::before{content:"";display:block;height:4px;border-radius:4px;background:var(--line);margin-bottom:8px}
+.steps .done::before,.steps .cur::before{background:var(--teal)}
+.steps .cur{color:var(--ink)}
+h2{font-size:20px;margin:0 0 4px;letter-spacing:-.01em}
+.sub{color:var(--muted);margin:0 0 18px;font-size:14px}
+.f{display:grid;gap:14px}
+.row{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+label{display:grid;gap:6px;font-size:13px;font-weight:600}
+input[type=text],input[type=email],input[type=tel],input[type=password],select,textarea{width:100%;padding:11px 13px;border:1px solid var(--line);border-radius:11px;background:var(--bg);font-weight:400;font-size:15px}
+textarea{resize:vertical;min-height:84px}
+.err{color:var(--rose);font-size:12px;font-weight:500;min-height:0}
+.chk{display:flex;gap:10px;align-items:flex-start;font-weight:400;font-size:13px;color:var(--muted)}
+.chk input{margin-top:3px;accent-color:var(--teal)}
+.btn{border:0;border-radius:12px;padding:12px 20px;font-weight:700;cursor:pointer;background:var(--teal);color:var(--on-teal);transition:transform .15s}
+.btn:active{transform:scale(.98)}
+.btn.ghost{background:none;color:var(--muted);padding:12px 8px}
+.btn.line{background:var(--surface);color:var(--ink);border:1px solid var(--line)}
+.btn.sm{padding:8px 14px;font-size:13px;border-radius:10px}
+.btn.rose{background:none;color:var(--rose);border:1px solid var(--line)}
+.btn[disabled]{opacity:.45;cursor:not-allowed}
+.foot{display:flex;justify-content:space-between;align-items:center;margin-top:22px;gap:10px}
+.cal-wrap{display:grid;grid-template-columns:1.5fr 1fr;gap:20px}
+.cal-h{display:flex;align-items:center;justify-content:space-between;margin-bottom:10px;font-weight:700}
+.cal-h button{width:32px;height:32px;border-radius:9px;border:1px solid var(--line);background:var(--surface);cursor:pointer}
+.cal-h button[disabled]{opacity:.35;cursor:default}
+.grid7{display:grid;grid-template-columns:repeat(7,1fr);gap:3px;text-align:center}
+.grid7 .dow{font-size:11px;color:var(--muted);font-weight:600;padding:4px 0}
+.grid7 button{aspect-ratio:1;border:0;border-radius:10px;background:none;font-size:13px;font-weight:600;cursor:pointer}
+.grid7 button:not([disabled]):hover{background:var(--teal-soft)}
+.grid7 button[disabled]{color:var(--muted);opacity:.4;cursor:default}
+.grid7 button.sel{background:var(--teal);color:var(--on-teal)}
+.times h3{font-size:13px;margin:0 0 10px}
+.times{display:grid;gap:8px;align-content:start}
+.times button{padding:10px;border-radius:10px;border:1px solid var(--line);background:var(--surface);font-weight:600;cursor:pointer}
+.times button.sel{border-color:var(--teal);background:var(--teal-soft);color:var(--teal)}
+.times button[disabled]{text-decoration:line-through;opacity:.4;cursor:default}
+.times .hint{font-size:12px;color:var(--muted)}
+.sumbox{border:1px solid var(--line);border-radius:14px;padding:6px 16px;background:var(--bg)}
+.sumbox div{display:flex;justify-content:space-between;gap:12px;padding:10px 0;border-bottom:1px solid var(--line);font-size:14px}
+.sumbox div:last-child{border:0}.sumbox span{color:var(--muted)}.sumbox b{text-align:right}
+.ok{text-align:center;padding:8px 0 0}
+.ok .ic{width:68px;height:68px;border-radius:50%;margin:0 auto 14px;display:grid;place-items:center;background:var(--teal-soft);color:var(--teal)}
+.ok.wait .ic{background:var(--amber-soft);color:var(--amber)}
+.next{text-align:left;margin:18px 0 0;padding:0;list-style:none;display:grid;gap:10px;font-size:14px}
+.next li{display:flex;gap:10px}.next li::before{content:"";flex:none;width:8px;height:8px;border-radius:50%;background:var(--teal);margin-top:7px}
+.acct{display:flex;align-items:center;gap:12px;padding:12px;border:1px solid var(--line);border-radius:14px;background:var(--bg);margin-bottom:14px}
+.av{width:44px;height:44px;border-radius:50%;background:var(--violet-soft);color:var(--violet);display:grid;place-items:center;font-weight:700}
+.chips{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:6px}
+.chips button{font-size:12px;font-weight:600;padding:6px 11px;border-radius:99px;background:var(--bg);border:1px solid var(--line);color:var(--ink);cursor:pointer}.chips button[aria-pressed="true"]{background:var(--teal-soft);color:var(--teal);border-color:var(--teal)}.pay{margin-top:16px;display:grid;gap:8px;font-size:13px}
+.flowrow{display:grid;grid-template-columns:repeat(2,1fr);gap:20px;margin-top:28px}
+.flow{padding:22px}
+.flow h3{margin:0 0 14px;font-size:16px}
+.flow ol{margin:0;padding:0;list-style:none;display:grid;gap:12px}
+.flow li{display:flex;gap:12px;align-items:center;font-size:14px}
+.flow li b{flex:none;width:28px;height:28px;border-radius:50%;display:grid;place-items:center;font-size:13px;background:var(--teal-soft);color:var(--teal)}
+.flow.ex li b{background:var(--violet-soft);color:var(--violet)}
+.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-bottom:20px}
+.stat{padding:18px 20px}.stat small{color:var(--muted);font-weight:600;font-size:13px}
+.stat strong{display:block;font:400 38px/1.1 "Instrument Serif",Georgia,serif;margin:6px 0 2px}
+.stat em{font-style:normal;font-size:12px;color:var(--teal);font-weight:600}
+.dash{display:grid;grid-template-columns:1.5fr 1fr;gap:20px;align-items:start}
+.panel{padding:22px}
+.panel h2{display:flex;justify-content:space-between;align-items:center}
+.req{display:flex;align-items:center;gap:14px;padding:14px 0;border-top:1px solid var(--line)}
+.req .who{flex:1;min-width:0}.req .who b{display:block}.req .who span{font-size:13px;color:var(--muted)}
+.pill{font-size:11px;font-weight:700;padding:3px 9px;border-radius:99px;background:var(--amber-soft);color:var(--amber);white-space:nowrap}
+.pill.new{background:var(--violet-soft);color:var(--violet)}
+.pill.okp{background:var(--teal-soft);color:var(--teal)}
+.acts{display:flex;gap:8px}
+.tg{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:12px 0;border-top:1px solid var(--line);font-size:14px}
+.tg small{display:block;color:var(--muted);font-size:12px}
+.sw{position:relative;flex:none;width:42px;height:24px}
+.sw input{position:absolute;inset:0;opacity:0;margin:0;cursor:pointer;z-index:1}
+.sw i{position:absolute;inset:0;border-radius:99px;background:var(--line);transition:.2s}
+.sw i::after{content:"";position:absolute;left:3px;top:3px;width:18px;height:18px;border-radius:50%;background:#fff;transition:.2s}
+.sw input:checked+i{background:var(--teal)}.sw input:checked+i::after{transform:translateX(18px)}
+.sw input:focus-visible+i{outline:2px solid var(--teal);outline-offset:2px}
+.week{display:grid;grid-template-columns:repeat(7,1fr);gap:6px;margin-top:4px}
+.week button{border:0;cursor:pointer;text-align:center;font-size:12px;font-weight:600;padding:10px 0;border-radius:10px;background:var(--teal-soft);color:var(--teal)}
+.week button.off{background:var(--bg);color:var(--muted)}
+.week small{display:block;font-weight:500;font-size:10px}
+.toast{position:fixed;left:50%;bottom:calc(24px + env(safe-area-inset-bottom,0px));transform:translate(-50%,20px);background:var(--ink);color:var(--bg);padding:12px 20px;border-radius:12px;font-weight:600;font-size:14px;opacity:0;pointer-events:none;transition:.25s;z-index:40}
+.toast.on{opacity:1;transform:translate(-50%,0)}
+@media (max-width:900px){.hero{grid-template-columns:1fr;padding:28px;gap:28px}.dash,.flowrow{grid-template-columns:1fr}.stats{grid-template-columns:1fr 1fr}.cal-wrap{grid-template-columns:1fr}}
+@media (max-width:520px){main{padding:16px 14px 40px}.row{grid-template-columns:1fr}.hero{padding:20px;border-radius:22px}.widget{padding:18px}.req{flex-wrap:wrap}.top .in{padding:10px 14px}.tag{display:none}}
+@media (prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+</head>
+<body>
+<header class="top"><div class="in">
+  <div class="brand"><span class="logo"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><rect x="3" y="5" width="18" height="16" rx="3"/><path d="M8 3v4M16 3v4M3 10h18"/></svg></span>Your Business</div>
+  <div class="tabs" role="tablist">
+    <button role="tab" id="t-c" aria-selected="true">Customer booking</button>
+    <button role="tab" id="t-o" aria-selected="false">Owner dashboard</button>
+  </div>
+  <span class="tag">Concept mockup</span>
+</div></header>
+
+<main>
+<section id="v-c">
+  <div class="hero">
+    <div>
+      <h1>Book your appointment online</h1>
+      <p class="lead">Simple, convenient and personalised. Choose a time that suits you and we will confirm it by email.</p>
+      <ul class="perks">
+        <li><i>◔</i><div><b>Live availability</b><span>See open dates and times as the owner sets them.</span></div></li>
+        <li><i>☺</i><div><b>Your own profile</b><span>Save your details and rebook in a few taps.</span></div></li>
+        <li><i>✉</i><div><b>Reminders and offers</b><span>Get a confirmation, a reminder before you visit, and offers you choose to receive.</span></div></li>
+      </ul>
+    </div>
+    <div class="card widget" id="w"></div>
+  </div>
+  <div class="flowrow">
+    <div class="card flow"><h3>New customer flow</h3><ol><li><b>1</b>Visit website and select Book now</li><li><b>2</b>Complete the consultation form</li><li><b>3</b>Create a profile</li><li><b>4</b>Choose a date and time from available slots</li><li><b>5</b>Request sent, owner reviews and confirms</li></ol></div>
+    <div class="card flow ex"><h3>Existing customer flow</h3><ol><li><b>1</b>Log in to account</li><li><b>2</b>Manage profile and booking history</li><li><b>3</b>Choose a date and time</li><li><b>4</b>Review and confirm booking</li><li><b>5</b>Instant confirmation email</li></ol></div>
+  </div>
+</section>
+
+<section id="v-o" hidden>
+  <div class="stats">
+    <div class="card stat"><small>Pending requests</small><strong id="s-p">3</strong><em>Needs your review</em></div>
+    <div class="card stat"><small>Bookings this week</small><strong id="s-b">18</strong><em>+4 vs last week</em></div>
+    <div class="card stat"><small>Reminders sent</small><strong>42</strong><em>No-shows down 31%</em></div>
+    <div class="card stat"><small>Returning customers</small><strong>64%</strong><em>Offer open rate 58%</em></div>
+  </div>
+  <div class="dash">
+    <div class="card panel"><h2>Booking requests <span class="pill" id="p-c">3 pending</span></h2><p class="sub">New customers need your approval. Returning customers can book automatically.</p><div id="reqs"></div></div>
+    <div style="display:grid;gap:20px">
+      <div class="card panel"><h2>Availability</h2><p class="sub">Customers only see the slots you open.</p>
+        <div class="week" id="wk"></div><div class="row" style="margin-top:12px"><label>Opens<select id="hf"></select></label><label>Closes<select id="ht"></select></label></div></div>
+      <div class="card panel"><h2>Automations</h2><p class="sub">Choose what customers receive.</p>
+        <div class="tg"><div>Booking confirmation<small>Sent when you approve a request</small></div><span class="sw"><input type="checkbox" checked aria-label="Booking confirmation"><i></i></span></div>
+        <div class="tg"><div>Reminder 24 hours before<small>Email and SMS</small></div><span class="sw"><input type="checkbox" checked aria-label="Reminder"><i></i></span></div>
+        <div class="tg"><div>Special offers<small>Only to customers who opted in</small></div><span class="sw"><input type="checkbox" checked aria-label="Offers"><i></i></span></div>
+        <div class="tg"><div>Auto-confirm returning customers<small>Skip approval for existing profiles</small></div><span class="sw"><input type="checkbox" id="ac" checked aria-label="Auto-confirm"><i></i></span></div></div><div class="card panel"><h2>Send a special offer</h2><p class="sub">Goes only to customers who opted in (<b>38</b> customers).</p><div class="f"><label>Offer message<textarea id="om">10% off your next appointment when you book before 30 November.</textarea></label><button class="btn" id="so">Send offer</button><div class="sub" style="margin:0">Offers sent this month: <b id="on">0</b></div></div>
+      </div>
+    </div>
+  </div>
+</section>
+</main>
+<div class="toast" id="toast" role="status"></div>
+
+<script>
+const $=s=>document.querySelector(s);
+const MONTHS=["January","February","March","April","May","June","July","August","September","October","November","December"];
+const AV={days:[1,1,1,1,1,1,0],from:9,to:17},PAYS=["Pay in person","Pay a deposit online","Pay in full online"],BOOKED=[];let BK=18;
+function slots(){const a=[];for(let h=AV.from;h<AV.to;h++)a.push(String(h).padStart(2,"0")+":00");return a}
+function pay(){return `<div class="pay"><b>Payment</b>${PAYS.map((p,i)=>`<label class="chk"><input type="radio" name="pay" data-pay="${i}" ${S.pay===i?"checked":""}>${p}</label>`).join("")}</div>`}
+function acct(){const T=["My details","My appointments","Consultation information","Communication preferences"],p=S.pref;
+  const P=[`<div class="sumbox"><div><span>Name</span><b>Sarah Johnson</b></div><div><span>Email</span><b>sarah@example.com</b></div><div><span>Phone</span><b>07700 900123</b></div></div>`,
+  `<div class="sumbox">${BOOKED.map(x=>`<div><span>${x}</span><b>Confirmed</b></div>`).join("")}<div><span>Tue 6 Oct, 10:00</span><b>Completed</b></div><div><span>Fri 4 Sep, 14:30</span><b>Completed</b></div></div>`,
+  `<div class="sumbox"><div><span>Allergies</span><b>None noted</b></div><div><span>Preferences</span><b>Morning appointments</b></div><div><span>Last updated</span><b>6 Oct 2026</b></div></div>`,
+  [["email","Email reminders"],["sms","SMS reminders"],["offers","Special offers"]].map(([k,l])=>`<div class="tg"><div>${l}</div><span class="sw"><input type="checkbox" data-pref="${k}" ${p[k]?"checked":""} aria-label="${l}"><i></i></span></div>`).join("")];
+  return `<h2>My account</h2><p class="sub">View and update your profile, saved information and booking history.</p><div class="acct"><div class="av">SJ</div><div><b>Sarah Johnson</b><div class="sub" style="margin:0;font-size:13px">sarah@example.com</div></div></div><div class="chips">${T.map((t,i)=>`<button data-tab="${i}" aria-pressed="${S.tab===i}">${t}</button>`).join("")}</div>${P[S.tab]}`}
+function submit(tag){const n=tag==="New"?S.d.name:"Sarah Johnson",sv=tag==="New"?S.d.service:"Standard appointment",
+  w=new Date(2026,S.month,S.day).toLocaleDateString("en-GB",{weekday:"short",day:"numeric",month:"short"})+", "+S.time;
+  if(tag==="Returning"&&$("#ac").checked){BOOKED.push(w);BK++;$("#s-b").textContent=BK;toast("Booking confirmed. Confirmation email sent")}
+  else{REQ.unshift({n,s:sv,w,tag});reqs();toast("Request sent to the owner")}}
+function avail(){const D=["Mon","Tue","Wed","Thu","Fri","Sat","Sun"];
+  $("#wk").innerHTML=D.map((d,i)=>`<button data-d="${i}" aria-pressed="${!!AV.days[i]}" class="${AV.days[i]?"":"off"}">${d}<small>${AV.days[i]?"Open":"Off"}</small></button>`).join("");
+  const o=(sel,v)=>{$(sel).innerHTML=Array.from({length:15},(_,k)=>k+6).map(h=>`<option value="${h}" ${h===v?"selected":""}>${String(h).padStart(2,"0")}:00</option>`).join("")};o("#hf",AV.from);o("#ht",AV.to)}
+function avChanged(){if(S.step<=2){S.day=S.time=null;render()}toast("Availability updated. Customers see it instantly")}
+const TODAY=new Date(2026,9,21);
+const S={mode:"new",step:0,month:9,day:null,time:null,tab:0,pay:0,pref:{email:true,sms:false,offers:true},d:{name:"",email:"",phone:"",service:"Initial consultation",info:"",marketing:true}};
+const STEPS={new:["Consultation","Profile","Date and time","Request sent"],ret:["Log in","My account","Date and time","Confirm","Booked"]};
+const ic={ok:'<svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>',clock:'<svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>'};
+const esc=s=>String(s).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+function toast(m){const t=$("#toast");t.textContent=m;t.classList.add("on");clearTimeout(toast.k);toast.k=setTimeout(()=>t.classList.remove("on"),2400)}
+function dateStr(){const dt=new Date(2026,S.month,S.day);return dt.toLocaleDateString("en-GB",{weekday:"short",day:"numeric",month:"long",year:"numeric"})}
+function end(t){const[h,m]=t.split(":").map(Number);return String(h+1).padStart(2,"0")+":"+String(m).padStart(2,"0")}
+function cal(){
+  const first=(new Date(2026,S.month,1).getDay()+6)%7,n=new Date(2026,S.month+1,0).getDate();
+  let g=["Mon","Tue","Wed","Thu","Fri","Sat","Sun"].map(d=>`<div class="dow">${d}</div>`).join("")+'<span></span>'.repeat(first);
+  for(let i=1;i<=n;i++){const dt=new Date(2026,S.month,i),off=dt<=TODAY||!AV.days[(dt.getDay()+6)%7];
+    g+=`<button data-day="${i}" ${off?"disabled":""} class="${S.day===i?"sel":""}" aria-label="${i} ${MONTHS[S.month]}">${i}</button>`}
+  const times=S.day?slots().map((t,i)=>{const bad=(S.day+i)%4===0;return `<button data-time="${t}" ${bad?"disabled":""} class="${S.time===t?"sel":""}">${t}</button>`}).join(""):'<p class="hint">Select a date to see available times.</p>';
+  return `<div class="cal-wrap"><div><div class="cal-h"><button data-nav="-1" ${S.month<=9?"disabled":""} aria-label="Previous month">‹</button>${MONTHS[S.month]} 2026<button data-nav="1" ${S.month>=10?"disabled":""} aria-label="Next month">›</button></div><div class="grid7">${g}</div></div><div class="times"><h3>Available times</h3>${times}</div></div>`}
+function body(){
+  const d=S.d,m=S.mode,s=S.step;
+  if(m==="new"&&s===0)return `<h2>New customer consultation</h2><p class="sub">Tell us a little about you so we can prepare for your visit.</p><div class="f">
+    <label>Full name *<input type="text" id="name" value="${esc(d.name)}" autocomplete="name"></label>
+    <div class="row"><label>Email address *<input type="email" id="email" value="${esc(d.email)}" autocomplete="email"></label><label>Phone number *<input type="tel" id="phone" value="${esc(d.phone)}" autocomplete="tel"></label></div>
+    <label>Service<select id="service">${["Initial consultation","Standard appointment","Follow-up"].map(o=>`<option ${o===d.service?"selected":""}>${o}</option>`).join("")}</select></label>
+    <label>Additional information<textarea id="info" placeholder="For example medical conditions, preferences, allergies">${esc(d.info)}</textarea></label><div class="err" id="err"></div></div>`;
+  if(m==="new"&&s===1)return `<h2>Create your account</h2><p class="sub">Your profile saves your details so rebooking takes seconds.</p><div class="f">
+    <label>Full name<input type="text" value="${esc(d.name)}" readonly></label><label>Email address<input type="email" value="${esc(d.email)}" readonly></label>
+    <label>Password *<input type="password" id="pw" autocomplete="new-password" placeholder="At least 8 characters"></label>
+    <label>Send my booking reminders by<select id="ch">${["Email","SMS","Email and SMS"].map(o=>`<option ${o===(d.channel||"Email")?"selected":""}>${o}</option>`).join("")}</select></label><label class="chk"><input type="checkbox" id="mk" ${d.marketing?"checked":""}>Send me special offers. You can change this any time in Communication preferences.</label><div class="err" id="err"></div></div>`;
+  if(m==="ret"&&s===1)return acct();
+  if((m==="new"&&s===2)||(m==="ret"&&s===2))return `<h2>Choose date and time</h2><p class="sub">Based on current availability.</p>${cal()}${pay()}<div class="err" id="err"></div>`;
+  if(m==="new"&&s===3)return `<div class="ok wait"><div class="ic">${ic.clock}</div><h2>Booking request sent</h2><p class="sub">Your appointment request has been submitted. You will receive an email once it is approved.</p></div><div class="sumbox"><div><span>Date</span><b>${dateStr()}</b></div><div><span>Time</span><b>${S.time} to ${end(S.time)}</b></div><div><span>Service</span><b>${esc(d.service)}</b></div><div><span>Reminders</span><b>${esc(d.channel||"Email")}</b></div><div><span>Payment</span><b>${PAYS[S.pay]}</b></div><div><span>Status</span><b>Awaiting approval</b></div></div><ul class="next"><li>The owner reviews your consultation form</li><li>You get a confirmation email once approved</li><li>A reminder arrives before your appointment</li></ul>`;
+  if(m==="ret"&&s===0)return `<div class="ok" style="text-align:left"><div style="font-size:22px;font-weight:700;margin-bottom:2px">Welcome back</div><p class="sub">Log in to book in a few taps.</p></div><div class="f"><label>Email address<input type="email" id="lemail" value="sarah@example.com"></label><label>Password<input type="password" id="lpw" value="password123"></label><a href="#" data-fp style="font-size:13px;color:var(--teal);font-weight:600;text-align:right;text-decoration:none">Forgot password?</a><div class="err" id="err"></div></div>`;
+  if(m==="ret"&&s===3)return `<h2>Review and confirm</h2><p class="sub">Check the details before you confirm.</p><div class="sumbox"><div><span>Date</span><b>${dateStr()}</b></div><div><span>Time</span><b>${S.time} to ${end(S.time)}</b></div><div><span>Service</span><b>Standard appointment</b></div><div><span>With</span><b>Team member</b></div><div><span>Payment</span><b>${PAYS[S.pay]}</b></div><div><span>Location</span><b>Studio, main address</b></div></div>`;
+  const w=m==="ret"&&!$("#ac").checked;return `<div class="ok${w?" wait":""}"><div class="ic">${w?ic.clock:ic.ok}</div><h2>${w?"Booking request sent":"Booking confirmed"}</h2><p class="sub">${w?"The owner will confirm your appointment by email shortly.":"A confirmation email with all the details is on its way, and we will remind you before your appointment."}</p></div><div class="sumbox"><div><span>Date</span><b>${dateStr()}</b></div><div><span>Time</span><b>${S.time} to ${end(S.time)}</b></div><div><span>Payment</span><b>${PAYS[S.pay]}</b></div></div>`}
+function render(){
+  const labs=STEPS[S.mode],last=S.step===labs.length-1,w=$("#w");
+  const btn=S.mode==="new"?["Continue","Create account","Request appointment"]:["Log in","Continue","Continue","Confirm booking"];
+  w.innerHTML=`<div class="seg"><button data-mode="new" aria-pressed="${S.mode==="new"}">New customer</button><button data-mode="ret" aria-pressed="${S.mode==="ret"}">Existing customer</button></div>
+  <div class="steps">${labs.map((l,i)=>`<div class="${i<S.step?"done":i===S.step?"cur":""}">${l}</div>`).join("")}</div>${body()}
+  <div class="foot">${last?`<button class="btn line" data-reset>Start again</button><span></span>`:`${S.step>0?'<button class="btn ghost" data-back>Back</button>':"<span></span>"}<button class="btn" data-next>${btn[S.step]}</button>`}</div>`;
+}
+function err(m){const e=$("#err");if(e)e.textContent=m;return false}
+function next(){
+  const v=id=>($("#"+id)||{}).value||"";
+  if(S.mode==="new"&&S.step===0){const d=S.d;d.name=v("name").trim();d.email=v("email").trim();d.phone=v("phone").trim();d.service=v("service");d.info=v("info");
+    if(!d.name||!/^\S+@\S+\.\S+$/.test(d.email)||d.phone.length<6)return err("Enter your name, a valid email address and a phone number.")}
+  if(S.mode==="ret"&&S.step===0){if(!/^\S+@\S+\.\S+$/.test(v("lemail"))||!v("lpw"))return err("Enter your email address and password.")}
+  if(S.mode==="new"&&S.step===1){S.d.marketing=$("#mk").checked;S.d.channel=v("ch");if(v("pw").length<8)return err("Choose a password with at least 8 characters.")}
+  if((S.mode==="new"&&S.step===2)||(S.mode==="ret"&&S.step===2)){if(!S.day||!S.time)return err("Select a date and a time to continue.")}
+  if(S.mode==="new"&&S.step===2)submit("New");
+  if(S.mode==="ret"&&S.step===3)submit("Returning");
+  S.step++;render()}
+$("#w").addEventListener("click",e=>{
+  const t=e.target.closest("button,a");if(!t)return;
+  if(t.dataset.fp!==undefined){e.preventDefault();toast("Password reset link sent");return}
+  if(t.dataset.mode){S.mode=t.dataset.mode;S.step=0;S.day=S.time=null;S.pay=0;render()}
+  else if(t.dataset.next!==undefined)next();
+  else if(t.dataset.back!==undefined){S.step--;render()}
+  else if(t.dataset.reset!==undefined){S.step=0;S.day=S.time=null;render()}
+  else if(t.dataset.tab){S.tab=+t.dataset.tab;render()}
+  else if(t.dataset.day){S.day=+t.dataset.day;S.time=null;render()}
+  else if(t.dataset.time){S.time=t.dataset.time;render()}
+  else if(t.dataset.nav){S.month+=+t.dataset.nav;S.day=S.time=null;render()}
+});
+const REQ=[{n:"Priya Shah",s:"Initial consultation",w:"Fri 23 Oct, 10:00",tag:"New"},{n:"Daniel Okafor",s:"Initial consultation",w:"Mon 26 Oct, 13:00",tag:"New"},{n:"Emma Clarke",s:"Follow-up",w:"Tue 27 Oct, 09:00",tag:"Returning"}];
+function reqs(){const el=$("#reqs");
+  el.innerHTML=REQ.length?REQ.map((r,i)=>`<div class="req"><div class="av">${r.n.split(" ").map(x=>x[0]).join("")}</div><div class="who"><b>${r.n}</b><span>${r.s} · ${r.w}</span></div><span class="pill ${r.tag==="New"?"new":""}">${r.tag}</span><div class="acts"><button class="btn sm" data-ok="${i}">Approve</button><button class="btn sm rose" data-no="${i}">Decline</button></div></div>`).join(""):'<p class="sub" style="padding:18px 0">All caught up. New requests appear here.</p>';
+  $("#s-p").textContent=REQ.length;$("#p-c").textContent=REQ.length+" pending"}
+$("#reqs").addEventListener("click",e=>{const b=e.target.closest("button");if(!b)return;
+  const i=b.dataset.ok??b.dataset.no;if(i===undefined)return;const r=REQ.splice(+i,1)[0];if(b.dataset.ok!==undefined){BK++;$("#s-b").textContent=BK}
+  toast(b.dataset.ok!==undefined?"Approved. Confirmation sent to "+r.n:"Declined. "+r.n+" has been notified");reqs()});
+function tab(o){$("#v-c").hidden=o;$("#v-o").hidden=!o;$("#t-c").setAttribute("aria-selected",!o);$("#t-o").setAttribute("aria-selected",o);window.scrollTo(0,0)}
+$("#t-c").onclick=()=>tab(false);$("#t-o").onclick=()=>tab(true);
+$("#w").addEventListener("change",e=>{const t=e.target;if(t.dataset.pref)S.pref[t.dataset.pref]=t.checked;if(t.dataset.pay)S.pay=+t.dataset.pay});
+$("#wk").addEventListener("click",e=>{const b=e.target.closest("button");if(!b)return;AV.days[+b.dataset.d]=AV.days[+b.dataset.d]?0:1;avail();avChanged()});
+["#hf","#ht"].forEach(q=>$(q).addEventListener("change",()=>{AV.from=+$("#hf").value;AV.to=+$("#ht").value;if(AV.to<=AV.from){AV.to=AV.from+1;avail()}avChanged()}));
+let OFF=0;$("#so").onclick=()=>{if(!$("#om").value.trim())return toast("Write the offer message first");OFF++;$("#on").textContent=OFF;toast("Offer sent to 38 opted-in customers")};
+render();reqs();avail();
+</script>
+</body>
+</html>
