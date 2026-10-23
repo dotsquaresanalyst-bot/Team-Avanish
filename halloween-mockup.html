@@ -1,0 +1,381 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Nightfall Market | Halloween Seasonal Mockup</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;800&family=Inter:wght@400;500;600&display=swap">
+<style>
+/* ============ 1. THEME TOKENS (edit these to re-skin) ============ */
+:root{
+  --bg:#0b0713; --bg2:#150c26; --card:#1a1030; --line:rgba(255,255,255,.09);
+  --purple:#6d28d9; --purple-l:#a78bfa; --orange:#ff7a1a; --orange-d:#e85d04;
+  --text:#f3eefc; --muted:#b4a9cc; --radius:18px;
+  --head:'Cinzel',Georgia,serif; --body:'Inter',system-ui,-apple-system,Segoe UI,sans-serif;
+}
+*{box-sizing:border-box;margin:0}
+html{scroll-behavior:smooth}
+body{font-family:var(--body);background:var(--bg);color:var(--text);line-height:1.55;overflow-x:hidden}
+a{color:inherit;text-decoration:none}
+button{font:inherit;cursor:pointer;border:0;color:inherit}
+.wrap{max-width:1200px;margin:auto;padding:0 20px}
+h1,h2,h3{font-family:var(--head);line-height:1.15}
+.btn{display:inline-flex;align-items:center;gap:8px;padding:13px 24px;border-radius:999px;font-weight:600;transition:.25s}
+.btn-primary{background:linear-gradient(135deg,var(--orange),var(--orange-d));color:#1a0a00;box-shadow:0 8px 28px rgba(255,122,26,.35)}
+.btn-primary:hover{transform:translateY(-2px);box-shadow:0 12px 34px rgba(255,122,26,.5)}
+.btn-ghost{background:rgba(255,255,255,.06);border:1px solid var(--line)}
+.btn-ghost:hover{background:rgba(167,139,250,.18)}
+:focus-visible{outline:3px solid var(--orange);outline-offset:2px}
+
+/* ============ 2. HALLOWEEN LAYERS (global, non-blocking) ============ */
+#fx{position:fixed;inset:0;pointer-events:none;z-index:40;overflow:hidden}
+.witch{position:absolute;top:14%;left:0;width:190px;animation:fly 26s linear infinite;filter:drop-shadow(0 0 14px rgba(255,122,26,.45))}
+.witch svg{width:100%;animation:bob 2.4s ease-in-out infinite}
+@keyframes fly{0%{transform:translateX(-240px) rotate(4deg)}45%{transform:translateX(55vw) translateY(40px) rotate(-3deg)}100%{transform:translateX(calc(100vw + 240px)) translateY(-20px) rotate(3deg)}}
+@keyframes bob{50%{transform:translateY(-10px) rotate(-2deg)}}
+.bat{position:absolute;font-size:22px;color:#000;animation:batfly linear infinite;opacity:.85}
+.bat svg{width:30px;fill:#07040d;animation:flap .35s ease-in-out infinite alternate}
+@keyframes batfly{from{transform:translate(-60px,0)}to{transform:translate(calc(100vw + 60px),var(--dy))}}
+@keyframes flap{to{transform:scaleY(.55)}}
+.ember{position:absolute;bottom:-10px;width:5px;height:5px;border-radius:50%;background:var(--orange);box-shadow:0 0 10px var(--orange);animation:rise linear infinite;opacity:0}
+@keyframes rise{10%{opacity:.9}100%{transform:translate(var(--dx),-105vh);opacity:0}}
+
+/* ============ 3. TOP BAR / HEADER ============ */
+.topbar{background:linear-gradient(90deg,#2b0f52,#7a2e00,#2b0f52);background-size:200%;animation:shift 12s linear infinite;text-align:center;font-size:.85rem;padding:8px 12px;font-weight:500}
+@keyframes shift{to{background-position:200% 0}}
+.topbar b{color:#ffd29e}
+header{position:sticky;top:0;z-index:50;background:rgba(11,7,19,.82);backdrop-filter:blur(14px);border-bottom:1px solid var(--line)}
+.nav{display:flex;align-items:center;gap:28px;height:72px}
+.logo{font-family:var(--head);font-weight:800;font-size:1.35rem;display:flex;align-items:center;gap:8px;white-space:nowrap}
+.logo i{font-style:normal;display:inline-block;animation:sway 3s ease-in-out infinite;transform-origin:50% 100%}
+@keyframes sway{50%{transform:rotate(-12deg)}}
+nav ul{display:flex;gap:6px;list-style:none}
+nav a{padding:8px 14px;border-radius:999px;font-weight:500;color:var(--muted);transition:.2s;position:relative}
+nav a:hover,nav a.on{color:#fff;background:rgba(167,139,250,.16)}
+nav a.hot::after{content:"🎃";position:absolute;top:-6px;right:-4px;font-size:.8rem}
+.tools{margin-left:auto;display:flex;gap:10px;align-items:center}
+.search{display:flex;align-items:center;background:rgba(255,255,255,.06);border:1px solid var(--line);border-radius:999px;padding:0 14px;height:42px}
+.search input{background:none;border:0;outline:0;color:var(--text);width:170px;font:inherit}
+.icon{width:42px;height:42px;border-radius:50%;background:rgba(255,255,255,.06);border:1px solid var(--line);position:relative;font-size:1.05rem}
+.icon:hover{background:rgba(255,122,26,.2)}
+.count{position:absolute;top:-4px;right:-4px;background:var(--orange);color:#1a0a00;font-size:.7rem;font-weight:700;min-width:19px;height:19px;border-radius:99px;display:grid;place-items:center}
+.burger{display:none}
+/* spider on a thread: decorates header */
+.spider{position:absolute;top:100%;right:9%;width:2px;background:rgba(255,255,255,.35);height:46px;animation:drop 5s ease-in-out infinite;transform-origin:top;z-index:3}
+.spider::after{content:"🕷️";position:absolute;bottom:-20px;left:-10px;font-size:20px}
+@keyframes drop{50%{height:92px}}
+
+/* ============ 4. HERO ============ */
+.hero{position:relative;min-height:640px;display:grid;align-items:center;overflow:hidden;
+  background:radial-gradient(ellipse at 78% 18%,rgba(255,170,60,.22),transparent 38%),linear-gradient(180deg,#1b0b3a 0%,#0e0720 60%,var(--bg) 100%)}
+.stars{position:absolute;inset:0;background-image:radial-gradient(1.5px 1.5px at 20% 30%,#fff,transparent),radial-gradient(1px 1px at 60% 20%,#fff,transparent),radial-gradient(1.5px 1.5px at 85% 55%,#fff,transparent),radial-gradient(1px 1px at 40% 70%,#fff,transparent),radial-gradient(1px 1px at 10% 80%,#fff,transparent);background-size:340px 340px;opacity:.55;animation:twinkle 5s ease-in-out infinite}
+@keyframes twinkle{50%{opacity:.25}}
+.moon{position:absolute;right:9%;top:60px;width:230px;height:230px;border-radius:50%;background:radial-gradient(circle at 35% 35%,#fff4d6,#ffc46b 60%,#e8913a);box-shadow:0 0 90px 30px rgba(255,170,60,.35);animation:glow 6s ease-in-out infinite}
+@keyframes glow{50%{box-shadow:0 0 120px 46px rgba(255,170,60,.5)}}
+.fog{position:absolute;left:-20%;width:140%;height:180px;bottom:0;background:radial-gradient(ellipse at 50% 100%,rgba(190,170,255,.28),transparent 70%);filter:blur(22px);animation:drift 22s ease-in-out infinite alternate}
+.fog.f2{bottom:30px;opacity:.7;animation-duration:30s;animation-direction:alternate-reverse}
+@keyframes drift{to{transform:translateX(12%)}}
+.hill{position:absolute;bottom:0;left:0;width:100%;height:150px;fill:#07040d}
+.hero .wrap{position:relative;z-index:5;padding-top:50px;padding-bottom:110px}
+.eyebrow{display:inline-block;background:rgba(255,122,26,.16);color:#ffc690;border:1px solid rgba(255,122,26,.4);padding:6px 14px;border-radius:99px;font-size:.8rem;font-weight:600;letter-spacing:.08em;text-transform:uppercase}
+.hero h1{font-size:clamp(2.4rem,6vw,4.6rem);margin:18px 0;font-weight:800;max-width:700px}
+.hero h1 em{font-style:normal;background:linear-gradient(90deg,var(--orange),#ffd29e);-webkit-background-clip:text;background-clip:text;color:transparent}
+.hero p{max-width:520px;color:var(--muted);font-size:1.1rem;margin-bottom:28px}
+.cta{display:flex;gap:12px;flex-wrap:wrap}
+.pumpkins{position:absolute;bottom:34px;right:6%;z-index:4;display:flex;gap:6px;align-items:flex-end}
+.pumpkins span{font-size:84px;filter:drop-shadow(0 0 26px rgba(255,122,26,.6));animation:flick 3s ease-in-out infinite}
+.pumpkins span:nth-child(2){font-size:120px;animation-delay:-1s}.pumpkins span:nth-child(3){animation-delay:-2s}
+@keyframes flick{40%{filter:drop-shadow(0 0 14px rgba(255,122,26,.4))}50%{filter:drop-shadow(0 0 34px rgba(255,160,40,.9))}}
+
+/* ============ 5. TRUST STRIP / SECTIONS ============ */
+.trust{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-top:-52px;position:relative;z-index:6}
+.trust div{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:16px 18px;display:flex;gap:12px;align-items:center;font-size:.9rem}
+.trust b{display:block}.trust small{color:var(--muted)}.trust span{font-size:1.5rem}
+section{padding:72px 0 0}
+.sec-head{display:flex;justify-content:space-between;align-items:end;gap:16px;margin-bottom:28px;flex-wrap:wrap}
+.sec-head h2{font-size:clamp(1.6rem,3.5vw,2.3rem)}.sec-head p{color:var(--muted)}
+.sec-head a{color:var(--orange);font-weight:600}
+
+/* promo carousel */
+.promo{position:relative;border-radius:24px;overflow:hidden;border:1px solid var(--line)}
+.slides{display:flex;transition:transform .6s cubic-bezier(.7,0,.2,1)}
+.slide{min-width:100%;padding:48px clamp(24px,5vw,64px);min-height:240px;display:flex;flex-direction:column;justify-content:center;align-items:flex-start;gap:10px}
+.slide:nth-child(1){background:linear-gradient(120deg,#3b0f7a,#7a2e00)}
+.slide:nth-child(2){background:linear-gradient(120deg,#0f2a2a,#2b0f52)}
+.slide:nth-child(3){background:linear-gradient(120deg,#5a1500,#150c26)}
+.slide h3{font-size:clamp(1.4rem,3vw,2.1rem)}.slide p{color:#e4d9f7;max-width:520px}
+.dots{position:absolute;bottom:14px;left:50%;transform:translateX(-50%);display:flex;gap:8px}
+.dots button{width:9px;height:9px;border-radius:50%;background:rgba(255,255,255,.35);padding:0}
+.dots button.on{background:var(--orange);width:26px;border-radius:9px}
+
+/* categories */
+.cats{display:grid;grid-template-columns:repeat(4,1fr);gap:16px}
+.cat{background:linear-gradient(160deg,var(--card),#10091f);border:1px solid var(--line);border-radius:var(--radius);padding:26px 20px;text-align:center;transition:.3s;position:relative;overflow:hidden}
+.cat:hover{transform:translateY(-6px);border-color:var(--orange);box-shadow:0 14px 36px rgba(255,122,26,.18)}
+.cat span{font-size:2.6rem;display:block;margin-bottom:8px;transition:.3s}.cat:hover span{transform:scale(1.2) rotate(-8deg)}
+.cat small{color:var(--muted)}
+
+/* products */
+.filters{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:20px}
+.chip{padding:8px 16px;border-radius:99px;background:rgba(255,255,255,.06);border:1px solid var(--line);font-size:.88rem;font-weight:500}
+.chip.on,.chip:hover{background:var(--purple);border-color:var(--purple-l)}
+.grid{display:grid;grid-template-columns:repeat(4,1fr);gap:18px}
+.prod{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);overflow:hidden;transition:.3s;display:flex;flex-direction:column}
+.prod:hover{transform:translateY(-6px);box-shadow:0 18px 40px rgba(109,40,217,.3);border-color:rgba(167,139,250,.5)}
+.thumb{aspect-ratio:1;display:grid;place-items:center;font-size:4.2rem;position:relative;background:radial-gradient(circle at 50% 40%,var(--c),#120a22 75%)}
+.thumb em{transition:.35s;font-style:normal}.prod:hover .thumb em{transform:scale(1.15) rotate(6deg)}
+.badge{position:absolute;top:12px;left:12px;background:var(--orange);color:#1a0a00;font-size:.7rem;font-weight:700;padding:4px 10px;border-radius:99px;text-transform:uppercase}
+.badge.p{background:var(--purple-l)}
+.info{padding:16px;display:flex;flex-direction:column;gap:4px;flex:1}
+.info small{color:var(--muted)}.info h3{font-family:var(--body);font-size:1.02rem;font-weight:600}
+.price{display:flex;align-items:baseline;gap:8px;margin-top:auto;padding-top:8px}.price b{font-size:1.15rem}.price s{color:var(--muted);font-size:.85rem}
+.add{margin-top:10px;padding:11px;border-radius:12px;background:rgba(255,122,26,.14);color:#ffc690;font-weight:600;border:1px solid rgba(255,122,26,.4);transition:.2s}
+.add:hover{background:var(--orange);color:#1a0a00}
+
+/* mystery box */
+.mystery{display:grid;grid-template-columns:1.1fr 1fr;gap:30px;align-items:center;border-radius:28px;padding:clamp(24px,5vw,56px);background:radial-gradient(circle at 85% 50%,rgba(255,122,26,.25),transparent 45%),linear-gradient(135deg,#1d0f3d,#0e0720);border:1px solid rgba(167,139,250,.3)}
+.timer{display:flex;gap:10px;margin:18px 0}
+.timer div{background:rgba(0,0,0,.4);border:1px solid var(--line);border-radius:14px;padding:10px 14px;text-align:center;min-width:68px}
+.timer b{font-family:var(--head);font-size:1.6rem;display:block}.timer small{color:var(--muted);font-size:.7rem;text-transform:uppercase}
+.box{font-size:9rem;text-align:center;animation:wobble 4s ease-in-out infinite;filter:drop-shadow(0 0 40px rgba(255,122,26,.5))}
+@keyframes wobble{0%,100%{transform:rotate(-4deg) translateY(0)}50%{transform:rotate(4deg) translateY(-14px)}}
+
+/* footer */
+footer{margin-top:80px;background:#07040d;border-top:1px solid var(--line);padding:50px 0 24px;position:relative}
+footer::before{content:"";position:absolute;top:-34px;left:0;right:0;height:34px;background:#07040d;clip-path:polygon(0 100%,0 40%,4% 70%,8% 20%,13% 60%,18% 30%,24% 80%,30% 25%,36% 65%,42% 15%,48% 70%,55% 30%,61% 75%,67% 20%,73% 65%,80% 25%,86% 70%,92% 30%,100% 75%,100% 100%)}
+.fcols{display:grid;grid-template-columns:1.4fr 1fr 1fr 1fr;gap:30px}
+footer h4{margin-bottom:10px}footer li{list-style:none;color:var(--muted);font-size:.92rem;padding:3px 0}
+footer p{color:var(--muted);font-size:.9rem}.copy{text-align:center;color:var(--muted);font-size:.8rem;margin-top:34px}
+
+/* cart drawer / toast / controls */
+.drawer{position:fixed;top:0;right:0;height:100%;width:min(400px,100%);background:var(--bg2);border-left:1px solid var(--line);z-index:90;transform:translateX(105%);transition:.4s;padding:22px;display:flex;flex-direction:column}
+.drawer.open{transform:none}
+.drawer ul{list-style:none;flex:1;overflow:auto;margin:16px 0}.drawer li{display:flex;gap:12px;align-items:center;padding:10px 0;border-bottom:1px solid var(--line)}
+.drawer li span{font-size:1.8rem}.drawer li div{flex:1;font-size:.92rem}
+.scrim{position:fixed;inset:0;background:rgba(0,0,0,.6);z-index:80;opacity:0;pointer-events:none;transition:.3s}.scrim.on{opacity:1;pointer-events:auto}
+.toast{position:fixed;bottom:84px;left:50%;transform:translate(-50%,30px);background:#1d1038;border:1px solid var(--orange);padding:12px 20px;border-radius:99px;z-index:100;opacity:0;transition:.35s;font-size:.9rem}
+.toast.on{opacity:1;transform:translate(-50%,0)}
+.ctl{position:fixed;bottom:18px;left:18px;z-index:95;background:rgba(21,12,38,.92);border:1px solid var(--line);border-radius:99px;padding:10px 16px;font-size:.85rem;display:flex;gap:8px;align-items:center;backdrop-filter:blur(10px)}
+.ctl:hover{border-color:var(--orange)}
+.note{position:fixed;bottom:18px;right:18px;z-index:95;background:rgba(21,12,38,.92);border:1px solid var(--line);border-radius:14px;padding:10px 14px;font-size:.75rem;color:var(--muted);max-width:260px}
+
+/* accessibility + reduced motion (mirrors reference's "Reduce animations" option) */
+.calm *,.calm *::before,.calm *::after{animation:none!important;transition:none!important}
+.calm #fx{display:none}
+@media (prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important}#fx{display:none}}
+
+/* ============ 6. RESPONSIVE ============ */
+@media (max-width:1000px){.grid,.cats{grid-template-columns:repeat(2,1fr)}.trust{grid-template-columns:repeat(2,1fr)}.mystery{grid-template-columns:1fr}.fcols{grid-template-columns:1fr 1fr}.moon{width:150px;height:150px;right:5%}.search input{width:100px}}
+@media (max-width:760px){
+  .burger{display:grid}nav{position:absolute;top:100%;left:0;right:0;background:var(--bg2);border-bottom:1px solid var(--line);display:none;padding:12px}
+  nav.open{display:block}nav ul{flex-direction:column}.search{display:none}.nav{gap:12px}
+  .pumpkins span{font-size:52px}.pumpkins span:nth-child(2){font-size:74px}.witch{width:130px}.hero{min-height:600px}
+  .box{font-size:6rem}.note{display:none}.spider{right:22%}
+}
+@media (max-width:480px){.grid{gap:10px}.thumb{font-size:3rem}.cats{gap:10px}.fcols{grid-template-columns:1fr}.trust{grid-template-columns:1fr}.timer div{min-width:58px;padding:8px}}
+</style>
+</head>
+<body>
+
+<!-- Decorative overlay: witch, bats, embers (pointer-events:none, never blocks the shop) -->
+<div id="fx" aria-hidden="true">
+  <div class="witch">
+    <svg viewBox="0 0 240 120" fill="#07040d">
+      <path d="M8 96 L170 80" stroke="#3a2412" stroke-width="5" stroke-linecap="round"/>
+      <path d="M8 96 C-6 84 -6 108 8 96 M8 96 L-8 90 M8 96 L-10 98 M8 96 L-6 108" stroke="#8a5a2b" stroke-width="3" fill="none"/>
+      <path d="M96 78 C94 56 108 42 124 40 C134 40 140 50 142 62 L150 78 Z"/>
+      <path d="M150 40 C170 44 180 56 176 66 C164 66 156 60 150 52Z"/>
+      <circle cx="140" cy="36" r="10"/>
+      <path d="M118 30 L136 4 L156 28 Z"/><path d="M110 30 Q137 22 166 30 Q137 36 110 30Z"/>
+      <path d="M96 78 C80 86 66 92 54 100 C80 98 104 96 124 84Z" opacity=".95"/>
+      <circle cx="198" cy="26" r="3" fill="#ffb347"/><circle cx="212" cy="14" r="2" fill="#ffb347"/>
+    </svg>
+  </div>
+</div>
+
+<div class="topbar">🎃 <b>Halloween Week:</b> free delivery over £15 · use code <b>BOO10</b> for 10% off the Spooky Edit</div>
+
+<header>
+  <div class="wrap nav">
+    <button class="icon burger" id="burger" aria-label="Menu">☰</button>
+    <a href="#" class="logo"><i>🦇</i> Nightfall Market</a>
+    <nav id="nav" aria-label="Main">
+      <ul>
+        <li><a href="#shop" class="on">Shop</a></li>
+        <li><a href="#cats">Collections</a></li>
+        <li><a href="#promos">Offers</a></li>
+        <li><a href="#mystery" class="hot">Mystery Box</a></li>
+        <li><a href="#footer">Support</a></li>
+      </ul>
+    </nav>
+    <div class="tools">
+      <label class="search"><span>🔍</span><input id="q" placeholder="Search products…" aria-label="Search products"></label>
+      <button class="icon" aria-label="Account">👤</button>
+      <button class="icon" id="cartBtn" aria-label="Open cart">🛒<span class="count" id="count">0</span></button>
+    </div>
+  </div>
+  <div class="spider" aria-hidden="true"></div>
+</header>
+
+<main>
+<!-- HERO -->
+<div class="hero">
+  <div class="stars"></div><div class="moon"></div>
+  <div class="fog"></div><div class="fog f2"></div>
+  <svg class="hill" viewBox="0 0 1440 150" preserveAspectRatio="none"><path d="M0 150V90C120 50 220 120 360 80S600 30 760 80 1050 120 1180 70 1380 60 1440 90V150Z"/></svg>
+  <div class="pumpkins" aria-hidden="true"><span>🎃</span><span>🎃</span><span>🎃</span></div>
+  <div class="wrap">
+    <span class="eyebrow">Halloween Collection 2026</span>
+    <h1>Treats worth <em>haunting</em> for.</h1>
+    <p>Your regular storefront, dressed for the season. Same products, same checkout, with a layer of seasonal magic on top.</p>
+    <div class="cta"><a href="#shop" class="btn btn-primary">Shop the Spooky Edit →</a><a href="#mystery" class="btn btn-ghost">🎁 Mystery Box</a></div>
+  </div>
+</div>
+
+<div class="wrap">
+  <div class="trust">
+    <div><span>🚚</span><p><b>Next-day delivery</b><small>Order by 2pm</small></p></div>
+    <div><span>🎁</span><p><b>Free delivery £15+</b><small>On qualifying orders</small></p></div>
+    <div><span>✅</span><p><b>100% authentic</b><small>Trusted brands only</small></p></div>
+    <div><span>⭐</span><p><b>Top rated</b><small>Loved by customers</small></p></div>
+  </div>
+
+  <!-- PROMO CAROUSEL -->
+  <section id="promos">
+    <div class="promo" id="promo">
+      <div class="slides" id="slides">
+        <div class="slide"><span class="eyebrow">Limited time</span><h3>Spooky Edit: up to 30% off</h3><p>Seasonal bundles, limited-edition drops and hand-picked favourites.</p><a href="#shop" class="btn btn-primary">Shop now</a></div>
+        <div class="slide"><span class="eyebrow">New in</span><h3>Midnight Arrivals have landed</h3><p>Fresh stock for the darkest week of the year.</p><a href="#shop" class="btn btn-ghost">See what's new</a></div>
+        <div class="slide"><span class="eyebrow">Rewards</span><h3>Double points until 31 October</h3><p>Every order earns twice the loyalty points. No tricks.</p><a href="#" class="btn btn-ghost">Join free</a></div>
+      </div>
+      <div class="dots" id="dots"></div>
+    </div>
+  </section>
+
+  <!-- CATEGORIES -->
+  <section id="cats">
+    <div class="sec-head"><div><h2>Shop by collection</h2><p>Seasonal icons layered onto familiar category tiles.</p></div></div>
+    <div class="cats">
+      <a class="cat" href="#shop" data-f="Candles"><span>🕯️</span><b>Candles & Glow</b><br><small>12 products</small></a>
+      <a class="cat" href="#shop" data-f="Treats"><span>🍬</span><b>Sweet Treats</b><br><small>24 products</small></a>
+      <a class="cat" href="#shop" data-f="Decor"><span>🕸️</span><b>Haunted Decor</b><br><small>18 products</small></a>
+      <a class="cat" href="#shop" data-f="Costume"><span>🧙</span><b>Costume & Cosplay</b><br><small>9 products</small></a>
+    </div>
+  </section>
+
+  <!-- PRODUCTS -->
+  <section id="shop">
+    <div class="sec-head"><div><h2>Seasonal best sellers</h2><p>Product cards keep their usual layout. Only the accents change.</p></div><a href="#">View all →</a></div>
+    <div class="filters" id="filters"></div>
+    <div class="grid" id="grid"></div>
+  </section>
+
+  <!-- MYSTERY BOX -->
+  <section id="mystery">
+    <div class="mystery">
+      <div>
+        <span class="eyebrow">Seasonal feature</span>
+        <h2 style="font-size:clamp(1.8rem,4vw,2.8rem);margin:14px 0 8px">The Halloween Mystery Box</h2>
+        <p style="color:var(--muted)">A surprise bundle worth far more than the price. Gone at midnight on 31 October.</p>
+        <div class="timer" id="timer" aria-live="off"></div>
+        <button class="btn btn-primary" data-box>Unlock the box 🔓</button>
+      </div>
+      <div class="box" aria-hidden="true">🎁</div>
+    </div>
+  </section>
+</div>
+</main>
+
+<footer id="footer">
+  <div class="wrap">
+    <div class="fcols">
+      <div><h4 class="logo" style="font-size:1.15rem">🦇 Nightfall Market</h4><p>Placeholder brand for presentation purposes. All names, products and prices are illustrative.</p></div>
+      <div><h4>Shop</h4><ul><li>New in</li><li>Best sellers</li><li>Clearance</li></ul></div>
+      <div><h4>Help</h4><ul><li>Delivery</li><li>Returns</li><li>Contact</li></ul></div>
+      <div><h4>Seasonal</h4><ul><li>Mystery Box</li><li>Rewards</li><li>Gift guide</li></ul></div>
+    </div>
+    <p class="copy">© 2026 Nightfall Market · Design concept</p>
+  </div>
+</footer>
+
+<div class="scrim" id="scrim"></div>
+<aside class="drawer" id="drawer" aria-label="Cart">
+  <div style="display:flex;justify-content:space-between;align-items:center"><h3>Your cart</h3><button class="icon" id="closeCart" aria-label="Close cart">✕</button></div>
+  <ul id="items"></ul>
+  <div style="display:flex;justify-content:space-between;font-weight:600;margin-bottom:12px"><span>Subtotal</span><span id="total">£0.00</span></div>
+  <button class="btn btn-primary" style="justify-content:center">Checkout</button>
+</aside>
+<div class="toast" id="toast"></div>
+<button class="ctl" id="calm">✨ Seasonal effects: <b id="calmState">On</b></button>
+<div class="note"><b>Design concept.</b> Seasonal layer is isolated in CSS section 2 and one JS block, so it can be switched off after Halloween.</div>
+
+<script>
+/* ============ DATA (replace with real store data) ============ */
+const PRODUCTS=[
+ {n:'Amber Pumpkin Candle',b:'Glow Co.',p:14.5,o:18,e:'🕯️',c:'#7a2e00',cat:'Candles',t:'Sale'},
+ {n:'Witch’s Brew Hot Cocoa',b:'Cauldron Kitchen',p:6.95,e:'☕',c:'#4a1f6e',cat:'Treats',t:'New'},
+ {n:'Glow Bat Garland',b:'Nightfall',p:11,e:'🦇',c:'#2b0f52',cat:'Decor'},
+ {n:'Wizard Hat Deluxe',b:'Spellbound',p:19.99,e:'🧙',c:'#5a1500',cat:'Costume',t:'Popular'},
+ {n:'Candy Corn Crunch',b:'Sweet Hex',p:3.99,o:5.5,e:'🍬',c:'#7a4a00',cat:'Treats',t:'Sale'},
+ {n:'Cobweb Lantern Set',b:'Nightfall',p:24,e:'🏮',c:'#3b0f7a',cat:'Decor',t:'New'},
+ {n:'Midnight Soy Candle',b:'Glow Co.',p:12.5,e:'🌙',c:'#1d1a5a',cat:'Candles'},
+ {n:'Ghost Cookie Box',b:'Cauldron Kitchen',p:8.75,e:'👻',c:'#4a3a6e',cat:'Treats',t:'Popular'}
+];
+const $=s=>document.querySelector(s),$$=s=>[...document.querySelectorAll(s)];
+let cart=[],filter='All',query='';
+
+/* ============ PRODUCTS / FILTERS / CART ============ */
+const money=n=>'£'+n.toFixed(2);
+function renderFilters(){
+  $('#filters').innerHTML=['All','Candles','Treats','Decor','Costume'].map(f=>`<button class="chip ${f===filter?'on':''}" data-f="${f}">${f}</button>`).join('');
+}
+function renderGrid(){
+  const list=PRODUCTS.filter(p=>(filter==='All'||p.cat===filter)&&p.n.toLowerCase().includes(query));
+  $('#grid').innerHTML=list.length?list.map(p=>`
+   <article class="prod"><div class="thumb" style="--c:${p.c}">${p.t?`<span class="badge ${p.t==='New'?'p':''}">${p.t}</span>`:''}<em>${p.e}</em></div>
+   <div class="info"><small>${p.b}</small><h3>${p.n}</h3><div class="price"><b>${money(p.p)}</b>${p.o?`<s>${money(p.o)}</s>`:''}</div>
+   <button class="add" data-n="${p.n}">Add to cart</button></div></article>`).join(''):'<p style="grid-column:1/-1;color:var(--muted)">No products match your search.</p>';
+}
+function renderCart(){
+  $('#count').textContent=cart.length;
+  $('#items').innerHTML=cart.length?cart.map(p=>`<li><span>${p.e}</span><div><b>${p.n}</b><br><small style="color:var(--muted)">${p.b}</small></div><b>${money(p.p)}</b></li>`).join(''):'<li style="color:var(--muted)">Your cart is empty.</li>';
+  $('#total').textContent=money(cart.reduce((s,p)=>s+p.p,0));
+}
+function toast(m){const t=$('#toast');t.textContent=m;t.classList.add('on');clearTimeout(toast.id);toast.id=setTimeout(()=>t.classList.remove('on'),2200)}
+function drawer(open){$('#drawer').classList.toggle('open',open);$('#scrim').classList.toggle('on',open)}
+document.addEventListener('click',e=>{
+  const f=e.target.closest('[data-f]');if(f){filter=f.dataset.f;renderFilters();renderGrid()}
+  const a=e.target.closest('.add');if(a){cart.push(PRODUCTS.find(p=>p.n===a.dataset.n));renderCart();toast('🎃 Added to cart');}
+  if(e.target.closest('[data-box]'))toast('🎁 Demo only: mystery box unlocked!');
+});
+$('#q').addEventListener('input',e=>{query=e.target.value.toLowerCase();renderGrid()});
+$('#cartBtn').onclick=()=>drawer(true);$('#closeCart').onclick=$('#scrim').onclick=()=>drawer(false);
+$('#burger').onclick=()=>$('#nav').classList.toggle('open');
+$$('#nav a').forEach(a=>a.addEventListener('click',()=>$('#nav').classList.remove('open')));
+
+/* ============ PROMO CAROUSEL ============ */
+let si=0;const n=3;
+$('#dots').innerHTML=[...Array(n)].map((_,i)=>`<button aria-label="Slide ${i+1}"></button>`).join('');
+function go(i){si=(i+n)%n;$('#slides').style.transform=`translateX(-${si*100}%)`;$$('#dots button').forEach((d,k)=>d.classList.toggle('on',k===si))}
+$$('#dots button').forEach((d,i)=>d.onclick=()=>go(i));go(0);setInterval(()=>go(si+1),5500);
+
+/* ============ COUNTDOWN ============ */
+function tick(){
+  let d=Math.max(0,new Date('2026-10-31T23:59:59')-new Date()),s=Math.floor(d/1000);
+  const v=[['Days',Math.floor(s/86400)],['Hrs',Math.floor(s%86400/3600)],['Min',Math.floor(s%3600/60)],['Sec',s%60]];
+  $('#timer').innerHTML=v.map(([l,x])=>`<div><b>${String(x).padStart(2,'0')}</b><small>${l}</small></div>`).join('');
+}
+tick();setInterval(tick,1000);
+
+/* ============ SEASONAL FX (remove this block to retire the theme) ============ */
+const fx=$('#fx'),bat='<svg viewBox="0 0 40 20"><path d="M20 4c2 0 3 3 4 3 3-3 8-4 16-2-4 1-5 4-4 7-3-2-5-2-7 2-1-2-3-3-5 2-1 3-3 3-4 3s-3 0-4-3c-2-5-4-4-5-2-2-4-4-4-7-2 1-3 0-6-4-7 8-2 13-1 16 2 1 0 2-3 4-3z"/></svg>';
+for(let i=0;i<5;i++){const b=document.createElement('div');b.className='bat';b.innerHTML=bat;
+  b.style.cssText=`top:${8+Math.random()*40}%;--dy:${(Math.random()*160-80)|0}px;animation-duration:${14+Math.random()*16}s;animation-delay:${-Math.random()*20}s`;fx.appendChild(b)}
+for(let i=0;i<16;i++){const e=document.createElement('div');e.className='ember';
+  e.style.cssText=`left:${Math.random()*100}%;--dx:${(Math.random()*120-60)|0}px;animation-duration:${8+Math.random()*10}s;animation-delay:${-Math.random()*14}s`;fx.appendChild(e)}
+$('#calm').onclick=()=>{const c=document.body.classList.toggle('calm');$('#calmState').textContent=c?'Off':'On'};
+
+renderFilters();renderGrid();renderCart();
+</script>
+</body>
+</html>
